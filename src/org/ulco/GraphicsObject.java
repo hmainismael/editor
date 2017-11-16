@@ -19,5 +19,9 @@ abstract public class GraphicsObject {
 
     abstract public String toString();
 
-    private int m_ID;
+    public int size() { return 1; };
+
+    public boolean isGroup() { return false; };
+
+    protected int m_ID;
 }
