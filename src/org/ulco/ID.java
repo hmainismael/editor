@@ -2,7 +2,7 @@ package org.ulco;
 
 public class ID {
     private static ID instance;
-    private int id;
+    private int id = 0;
 
     private ID()
     {}
@@ -16,10 +16,10 @@ public class ID {
     }
 
     public int incrementId(){
-        return id++;
+        return ++id;
     }
 
     public int getId(){
-        return id++;
+        return id;
     }
 }

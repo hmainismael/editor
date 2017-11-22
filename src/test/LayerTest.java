@@ -28,4 +28,30 @@ public class LayerTest extends TestCase {
         assertEquals(l.toJson(), "{ type: layer, objects : { { type: square, center: { type: point, x: 0.0, y: 0.0 }, length: 5.0 }, " +
                 "{ type: circle, center: { type: point, x: 5.0, y: 5.0 }, radius: 4.0 } } }");
     }
+
+    @Test
+    public void testJsonLayerWithGroups() throws Exception {
+        Document document = new Document();
+        Layer layer = document.createLayer();
+        Circle c = new Circle(new Point(4, 16), 10);
+        Square s = new Square(new Point(-4, -6), 3);
+
+        Group g = new Group();
+        Square s1 = new Square(new Point(0,0), 5);
+        Circle c2 = new Circle(new Point(5,5), 4);
+        g.add(s1);
+        g.add(c2);
+
+        layer.add(c);
+        layer.add(s);
+        layer.add(g);
+
+        String toJson = "{ type: layer, objects : { { type: circle, center: { type: point, x: 4.0, y: 16.0 }, radius: 10.0 }, "
+                + "{ type: square, center: { type: point, x: -4.0, y: -6.0 }, length: 3.0 } }, "
+                + "groups : { { type: group, objects : { { type: square, center: { type: point, x: 0.0, y: 0.0 }, length: 5.0 }, "
+                + "{ type: circle, center: { type: point, x: 5.0, y: 5.0 }, radius: 4.0 } }, groups : {  } } } }";
+
+        assertTrue(Utils.select(document, new Point(1,1), 8).size() == 2);
+        assertEquals(layer.toJson(), toJson);
+    }
 }
